@@ -1,0 +1,103 @@
+<html>
+    <head>
+        <title>Playing around with CSS Variables</title>
+    </head>
+    <body>
+        <header>
+            <h1>Playing with CSS Variables</h1>
+            <h2>Text updated with <span>JS</span></h2>
+        </header>
+        <div class="controls-container">
+            <label for="spacing-input">Spacing</label>
+            <input type="range" name="spacing" min="10" max="35" value="20" data-sizing="px"/>
+            <label for="spacing-input">Blur</label>
+            <input type="range" name="blur" min="0" max="35" value="20" data-sizing="px"/>
+            <label for="spacing-input">Base color</label>
+            <input type="color" name="base" data-base="#B4D455"/>
+        </div>
+        <div class="image-container">
+            <img src="https://dd5a797b7b1888f65ed1-4c3f2ca07ed2f906c343e17fec1e42ee.ssl.cf1.rackcdn.com/1/1/large.jpg" alt="">
+        </div>
+        <style>
+            :root {
+                --base: #B4D455;
+                --spacing: 10px;
+                --blur: 10px;
+            }
+
+            body {
+                background: #000;
+                color: #FFF;
+                margin: 0 auto;
+                padding: 0;
+                text-align: center;    
+                width: 70%;
+            }
+
+            header {
+                margin-bottom: 20px;
+            }
+
+            header h1 {
+                font-size: 50px;
+                margin: 0;
+            }
+
+            header h2 {
+                font-size: 35px;
+                margin-top: 15px;
+            }
+
+            header span {
+                color: var(--base);
+                font-size: 50px;
+            }
+
+            img {
+                width: 100%;
+                filter: blur(var(--blur));    
+            }
+
+            .controls-container {
+                margin-bottom: 15px;
+            }
+
+            .image-container {
+                background-color: var(--base);
+                padding: var(--spacing);
+            }
+
+            .controls-container {
+                align-items: center;
+                display: flex;
+                justify-content: center;
+            }
+
+            .controls-container label {
+                font-size: 31px;
+                font-style: italic;
+                margin: 0 10px 0 20px;    
+            }
+
+            .controls-container input {
+                border: 0;
+                cursor: pointer;
+                outline: none;
+                padding: 0;
+            }
+        </style>
+        <script>
+            const inputs = document.querySelectorAll('input');
+
+            function handleUpdate() {
+                const suffix = this.dataset.sizing || '';
+                document.documentElement.style.setProperty(`--${this.name}`,this.value + suffix);
+            }
+
+            inputs.forEach((input) => {
+                input.addEventListener('change', handleUpdate);
+                input.addEventListener('mousemove', handleUpdate);
+            });
+        </script>
+    </body>
+</html>
